@@ -7,7 +7,11 @@ class MessageWidget extends StatelessWidget {
   /// Const constructor.
   const MessageWidget(this.message, {super.key, this.style});
 
-  /// Message to display
+  /// Factory constructor for AsyncValue error callback.
+  factory MessageWidget.errorBuilder(Object error, StackTrace? _) =>
+      MessageWidget(error.toString());
+
+  /// Message to display.
   final String message;
 
   /// Optional text style (defaults to headlineSmall).

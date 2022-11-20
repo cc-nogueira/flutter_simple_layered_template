@@ -9,6 +9,13 @@ class MessagePage extends StatelessWidget {
   /// Const constructor with title and message.
   const MessagePage({super.key, required this.title, required this.message});
 
+  /// Factory constructor for error message with 'Error' title.
+  ///
+  /// Accepts an ignored StackTrace argument to make the signature
+  /// compatible with AsyncValue error callback.
+  factory MessagePage.error(Object error, [StackTrace? _]) =>
+      MessagePage(title: 'Error', message: error.toString());
+
   /// Page title.
   final String title;
 
@@ -21,31 +28,6 @@ class MessagePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: MessageWidget(message),
-    );
-  }
-}
-
-/// Simple error message page.
-///
-/// Presents a scaffold page with title and a centralized error message.
-class ErrorMessagePage extends StatelessWidget {
-  /// Const constructor with an Error object.
-  const ErrorMessagePage(this.error, {super.key});
-
-  /// Factory helper constructor for AsyncValue error callback.
-  factory ErrorMessagePage.errorBuilder(Object error, StackTrace? stackTrace) =>
-      ErrorMessagePage(error);
-
-  /// Error object.
-  final Object error;
-
-  /// Returns a MessagePage with translated Error page title showing the given
-  /// error as the message content.
-  @override
-  Widget build(BuildContext context) {
-    return MessagePage(
-      title: 'Error',
-      message: error.toString(),
     );
   }
 }

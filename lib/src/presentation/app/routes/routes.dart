@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entity/note.dart';
-import '../common/page/message_page.dart';
-import '../feature/note/page/note_page.dart';
-import '../feature/notes/notes_page.dart';
+import '../../../domain/entity/note.dart';
+import '../../common/page/message_page.dart';
+import '../../feature/note/note_page.dart';
+import '../../feature/notes/notes_page.dart';
 
 /// Routes management class.
 ///
 /// Uses static const variables to enumerate available routes and implements
 /// onGenerateRoute callback used for named routes navigation.
 class Routes {
+  /// Const constructor.
   const Routes();
 
+  /// Static routes.
   static const home = '/';
   static const note = '/note';
 
+  /// Callback for MaterialApp.
   Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
-        return _route((_) => NotesPage());
+        return _route((_) => const NotesPage());
       case note:
         return _routeWithArg<Note>(settings.arguments, (_, arg) => NotePage(note: arg));
       default:
         return _route(
-          (_) => ErrorMessagePage('Unknown route "${settings.name}"'),
+          (_) => MessagePage.error('Unknown route "${settings.name}"'),
         );
     }
   }
@@ -39,5 +42,5 @@ class Routes {
 
   Widget _argumentBuilder<T>(
           BuildContext context, Object? arg, Widget Function(BuildContext, T) builder) =>
-      arg is T ? builder(context, arg) : const ErrorMessagePage('Illegal argument for route');
+      arg is T ? builder(context, arg) : MessagePage.error('Illegal argument for route');
 }

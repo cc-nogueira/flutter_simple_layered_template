@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'routes.dart';
+import 'routes/routes.dart';
+import 'theme/theme_builder.dart';
 
-/// Weather App is this application MaterialApp.
+/// This is the MaterialApp.
 class App extends StatelessWidget {
   /// Const constructor
   const App({super.key});
@@ -14,8 +15,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
       title: 'App',
+      theme: ThemeBuilder().darkTheme,
       onGenerateRoute: _routes.onGenerateRoute,
       initialRoute: Routes.home,
     );

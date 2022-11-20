@@ -9,13 +9,13 @@ class LoadingPage extends StatelessWidget {
   /// Const constructor with title
   const LoadingPage(this.title, {super.key});
 
-  /// builder helper function for AsyncValue loading callback.
+  /// builder function for AsyncValue loading callback.
   static Widget Function() builder(String title) => () => LoadingPage(title);
 
   /// Page title
   final String title;
 
-  /// Build a scaffold with given title and a LoadingWidget.
+  /// Build a scaffold with given title and LoadingWidget.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
