@@ -2,10 +2,10 @@ import 'dart:async';
 
 import '../entity/note.dart';
 
-/// NotesService API definition.
+/// Notes service API definition.
 ///
 /// Defines a async API return Future values.
-abstract class NotesService {
+abstract class NotesServiceApi {
   /// Get a note by id from service.
   ///
   /// Throws [ArgumentError] if no notes are found with the given id.
@@ -17,8 +17,15 @@ abstract class NotesService {
   /// Throws [TimeoutException] if the service does not respond.
   Future<List<Note>> getNotes();
 
-  /// Add a note to the service repository.
+  /// Add a note without positive id to the service repository.
   ///
+  /// Return the added note with its generated id.
   /// Throws [TimeoutException] if the service does not respond.
-  Future<void> addNote(Note note);
+  Future<Note> addNote(Note note);
+
+  /// Update a note with positive id in the service repository.
+  ///
+  /// Throws [ArgumentError] if the note with the given id is not found.
+  /// Throws [TimeoutException] if the remote service does not respond.
+  Future<void> updateNote(Note note);
 }

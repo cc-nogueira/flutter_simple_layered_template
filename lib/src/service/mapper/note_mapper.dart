@@ -1,4 +1,4 @@
-import '../../../domain/entity/note.dart';
+import '../../domain/entity/note.dart';
 import '../model/note_model.dart';
 import 'entity_mapper.dart';
 

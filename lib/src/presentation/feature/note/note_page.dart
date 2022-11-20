@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entity/note.dart';
+import '../../../domain/entity/note.dart';
 
 class NotePage extends StatelessWidget {
   const NotePage({super.key, required this.note});

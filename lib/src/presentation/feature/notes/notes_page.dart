@@ -1,67 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entity/note.dart';
-import '../../../domain/provider/providers.dart';
 import '../../../domain/usecase/notes_use_case.dart';
-import '../../app/routes.dart';
-import '../../common/page/loading_page.dart';
 import '../../common/page/message_page.dart';
+import '../../common/widget/loading_widget.dart';
+import 'widget/notes_list.dart';
 
+/// Sample page to consume a FutureProvider.
+///
+/// Renders a LoadingWidget until the future resolves to its async data.
 class NotesPage extends ConsumerWidget {
-  NotesPage({super.key});
-
-  final _notesProvider = FutureProvider((ref) {
-    final NotesUseCase usecase = ref.watch(notesUseCaseProvider);
-    return usecase.getNotes();
-  });
+  const NotesPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(_notesProvider).when(
-          data: (data) => _NotesPage(data),
-          error: ErrorMessagePage.errorBuilder,
-          loading: LoadingPage.builder('Notes'),
+    final asyncWidget = ref.watch(notesProvider).when(
+          data: (data) => NotesList(data),
+          error: MessagePage.error,
+          loading: LoadingWidget.new,
         );
-  }
-}
-
-class _NotesPage extends StatelessWidget {
-  const _NotesPage(this._notes);
-
-  static const _leadingSize = 24.0;
-  final List<Note> _notes;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: const Text('Notes')),
-      body: ListView.builder(
-        itemCount: _notes.length,
-        itemBuilder: (context, idx) => _itemBuilder(context, colors, _notes[idx]),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showToDoMessage(context),
-        child: const Icon(Icons.add),
-      ),
+      body: asyncWidget,
+      floatingActionButton: _floatingActionButton(context, asyncWidget),
     );
   }
 
-  Widget _itemBuilder(BuildContext context, ColorScheme colors, Note note) {
-    return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.note, arguments: note),
-      child: ListTile(
-        minLeadingWidth: _leadingSize,
-        leading: Icon(
-          Icons.note_alt_outlined,
-          color: colors.primary,
-          size: _leadingSize,
-        ),
-        title: Text(note.title),
-        subtitle: Text(note.text, maxLines: 1, overflow: TextOverflow.ellipsis),
-      ),
-    );
+  FloatingActionButton? _floatingActionButton(BuildContext context, Widget asyncWidget) {
+    return asyncWidget is NotesList
+        ? FloatingActionButton(
+            onPressed: () => _showToDoMessage(context),
+            child: const Icon(Icons.add),
+          )
+        : null;
   }
 
   void _showToDoMessage(BuildContext context) {
