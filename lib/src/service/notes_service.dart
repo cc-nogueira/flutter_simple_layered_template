@@ -8,8 +8,8 @@ import 'repository_api/notes_repository_api.dart';
 
 part 'notes_service.g.dart';
 
-/// Singleton provider for a [NotesServiceApi].
-@Riverpod(keepAlive: true)
+/// [NotesServiceApi] provider.
+@riverpod
 NotesServiceApi notesService(NotesServiceRef ref) =>
     NotesService(ref.watch(notesRepositoryProvider));
 

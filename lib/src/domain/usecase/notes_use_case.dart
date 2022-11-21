@@ -6,10 +6,11 @@ import '../service_api/notes_service_api.dart';
 
 part 'notes_use_case.g.dart';
 
-/// Singleton provider for [NotesUseCase].
-@Riverpod(keepAlive: true)
+/// [NotesUseCase] provider.
+@riverpod
 NotesUseCase notesUseCase(NotesUseCaseRef ref) => NotesUseCase(ref.watch(notesServiceProvider));
 
+/// All notes provider.
 @riverpod
 Future<List<Note>> notes(NotesRef ref) {
   final NotesUseCase usecase = ref.watch(notesUseCaseProvider);

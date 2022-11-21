@@ -6,10 +6,14 @@ import '../repository_api/notes_repository_api.dart';
 part 'in_memory_notes_repository.g.dart';
 
 /// Singleton provider for [InMemoryNotesRepository].
+/// The repository holds state "in memory", thus the keepAlive requirement.
 @Riverpod(keepAlive: true)
 NotesRepositoryApi notesRepository(NotesRepositoryRef ref) => InMemoryNotesRepository();
 
 /// Simple in memory repository implementation.
+///
+/// This class should be managed as a persitent singleton.
+/// State is kept in memory and won't be persited between executions.
 ///
 /// Fakes remote access with fixed delays for all API implementations.
 class InMemoryNotesRepository implements NotesRepositoryApi {
