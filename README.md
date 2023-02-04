@@ -10,11 +10,11 @@ Download src to a local folder, and from inside this folder:
 
 Configure the project for Android or IOS:
 ```sh
-$ flutter create --platforms android .
+$ flutter create --platforms android --org com.example .
 
 or 
 
-$ flutter create --platforms ios .
+$ flutter create --platforms ios --org com.example .
 ```
 
 Build with build_runner (for code generation):
